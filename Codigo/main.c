@@ -20,7 +20,7 @@ int main()
     }
 
     for(cont = 0; cont < tamanho; cont++){
-        encadeada[cont] = 0;
+        encadeada[cont] = -1;
         for(cont2 = 0; cont2 < tamanho; cont2++){
           matriz[cont][cont2] = -1 ;
         }
@@ -42,20 +42,12 @@ int main()
        scanf("%d", &opcao);
      }
     }while(opcao == 1);
-   for(cont = 0; cont < tamanho; cont++){
-
-    printf("%d ", encadeada[cont]);
-   }
-
 
    for(cont = 0; cont < tamanho; cont++){
       Busca_Profundidade(matriz, encadeada, cont, tamanho, pos);
    }
 
-   for(cont = 0; cont < tamanho; cont++){
 
-    printf("%d ", encadeada[cont]);
-   }
 
     return 0;
 }
@@ -63,7 +55,7 @@ int main()
 void Imprimir(int matriz[][MAX], int tamanho){
   int i,j;
   for(i = 0; i < tamanho; i++){
-        printf("\n");
+  printf("\n");
     for(j = 0; j <tamanho; j++){
         if(i == j || matriz[i][j] == -1){
           printf("-- ");
@@ -76,36 +68,36 @@ void Imprimir(int matriz[][MAX], int tamanho){
 }
 
 void Busca_Profundidade(int matriz[][MAX],int encadeada[MAX], int origem,int tamanho, int pos){
- int cont, aux = 0, cont2, flag;
+ int cont, aux = 0, flag;
 
  for(cont = 0; cont < tamanho; cont++){
-  if(matriz[origem][cont] == 1 ){
-
-  //  printf("Foi %d\n", cont+1);
-    //system("pause");
+  if(matriz[origem][cont] == 1 && Checar_Existir_Vetor(encadeada, cont, tamanho) == 0){
+    printf("%d - p \n", pos);
     Busca_Profundidade(matriz,encadeada, cont, tamanho,pos);
-    aux = cont;
-    //system("pause");
-    //printf("Teste\n");
+    encadeada[pos] = cont;
+    pos = 1+cont;
   }
  }
 
- for(cont2 = 0; cont2 < tamanho; cont2++)
- {
-  if(aux != encadeada[cont2])
-  {
-   flag = 1;
+ for(cont = 0; cont < tamanho; cont++){
+  if(encadeada[cont] == -1 ){
+    printf("-- ");
   }else{
-   flag = 0;
+   printf("%d  ", encadeada[cont]);
   }
 
-  if(flag == 1){
-   encadeada[pos] = aux;
-   pos++;
-  }
  }
+ system("pause");
 
- // printf("Iteracao %d: ", cont+1);
- // printf("%d + %d - ",aux, cont );
+}
 
+int Checar_Existir_Vetor(int vetor[], int valor,int tamanho){
+  int cont;
+  for(cont = 0; cont < tamanho; cont++){
+     if(vetor[cont] == valor){
+       return 1;
+     }else{
+       return 0;
+     }
+  }
 }
